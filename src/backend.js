@@ -1,25 +1,61 @@
 const availableProducts = [
     {
-        title: "Product 1",
-        description: "This is the description for Product 1.",
+        title: "Chair 1",
+        description: "This is the description for chair.",
         price: 19.99,
         id: 123,
-        img: "images/pizza.jpg"
+        img: "images/Chair21.jpg"
     },
     {
-        title: "Product 2",
-        description: "This is the description for Product 2.",
+        title: "Chair 2",
+        description: "This is the description for chair.",
         price: 29.99,
         id: 234,
-        img: "images/pancakes.jpg"
+        img: "images/Chair22.jpg"
     },
     {
-        title: "Product 3",
-        description: "This is the description for Product 3.",
+        title: "Chair 3",
+        description: "This is the description for chair.",
         price: 39.99,
         id: 345,
-        img: "images/sushi.jpg"
-    }]
+        img: "images/Chair23.jpg"
+    },
+    {
+        title: "Chair 4",
+        description: "This is the description for chair.",
+        price: 19.99,
+        id: 456,
+        img: "images/Chair24.jpg"
+    },
+    {
+        title: "Chair 5",
+        description: "This is the description for chair.",
+        price: 19.99,
+        id: 567,
+        img: "images/Chair25.jpg"
+    },
+    {
+        title: "Chair 6",
+        description: "This is the description for chair.",
+        price: 29.99,
+        id: 568,
+        img: "images/Chair26.jpg"
+    },
+    {
+        title: "Chair 7",
+        description: "This is the description for chair.",
+        price: 29.99,
+        id: 569,
+        img: "images/Chair27.jpg"
+    },
+    {
+        title: "Chair 8",
+        description: "This is the description for chair.",
+        price: 29.99,
+        id: 570,
+        img: "images/Chair28.jpg"
+    },
+]
 
 
 export async function getAllProducts() {

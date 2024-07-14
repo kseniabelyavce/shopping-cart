@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {getAllProducts} from "../backend.js";
 import ProductCard from "../components/ProductCard.jsx";
+import { Container, SimpleGrid} from "@mantine/core";
 
 export default function StoreFrontPage({setIsCartOpened, isCartOpened}) {
     const [products, setProducts] = useState();
@@ -16,16 +17,15 @@ export default function StoreFrontPage({setIsCartOpened, isCartOpened}) {
     if (!products) return <div>Loading...</div>
 
     return (
-
-            <div style={{height: "100vh", flex: "2"}}>
-                {products.map((product) => {
+        <Container h={50} fluid>
+            <SimpleGrid cols={4} spacing="lg">
+                {products?.map((product) => {
                     return (
-                        <div key={product.id}>
-                            <ProductCard {...product} setIsCartOpened={setIsCartOpened} isCartOpened={isCartOpened}/>
-                        </div>
+                        <ProductCard  key={product.id} {...product} setIsCartOpened={setIsCartOpened} isCartOpened={isCartOpened}/>
                     )
                 })}
-            </div>
+            </SimpleGrid>
+        </Container>
     )
 
 }

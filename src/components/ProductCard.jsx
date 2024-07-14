@@ -1,7 +1,9 @@
 import {addToCart} from "../backend.js";
-
+import {Card, Text, Image, Badge, Group, useMantineTheme, Button} from "@mantine/core";
 
 export default function ProductCard({title, description, img, amount, price, id, isCartOpened, setIsCartOpened}) {
+    const theme = useMantineTheme();
+
     function onAddToCart() {
         if (!isCartOpened) {
             setIsCartOpened(true)
@@ -9,21 +11,28 @@ export default function ProductCard({title, description, img, amount, price, id,
         addToCart(id)
     }
 
-
     return (
-        <div style={{display: "flex", alignItems: "center", width: "100%"}}>
-            <img src={img} style={{width: "100px", height: "100px", marginRight: "15px", justifyContent: "space-between"}}/>
+        <Card withBorder radius="md" shadow="sm" padding="lg">
+            <Card.Section>
+                <Image
+                    src={img}
+                    height={160}
+                    alt={title}
+                />
+            </Card.Section>
 
-            <div style={{display: "flex", flexDirection: "column", alignSelf: "flex-start"}}>
-                <h3 style={{margin: 0, padding: 0}}>{title}</h3>
-                <p style={{margin: 0, padding: 0}}>{description}</p>
-                <div style={{display: "flex", marginTop: "15%", justifyContent: "space-between"}}>
-                    <p style={{ margin: 0, padding: 0}}>{price}$</p>
-                    <button className="add-to-cart_button" onClick={onAddToCart}>Add to cart</button>
-                </div>
-            </div>
+            <Group justify="space-between" mt="md" mb="xs">
+                <Text fw={500}>{title}</Text>
+                <Badge color={theme.colors.greyBlue[7]}>{price}$</Badge>
+            </Group>
 
-            {amount && <div style={{alignSelf: "flex-start", marginLeft: "auto", marginRight: "80px", padding: "10px", backgroundColor: "white"}}>{amount}</div>}
-        </div>
+            <Text size="sm" c="dimmed">
+                {description}
+            </Text>
+
+            <Button color="blue" mt="md" radius="md"  onClick={onAddToCart}>
+                Add to cart
+            </Button>
+        </Card>
     )
 }
