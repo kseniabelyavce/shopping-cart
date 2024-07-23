@@ -1,7 +1,9 @@
-import {addOneItemToCart, removeFromCart, removeOneItemFromCart} from "../../backend.js";
+import {addOneItemToCart, CartItemFullData, removeFromCart, removeOneItemFromCart} from "../../backend.ts";
 import { Button, Card, Group, Image, Text} from "@mantine/core";
 import classes from "./CartItem.module.css"
-export default function CartItem({title, description, img, amount, price, id}) {
+
+
+export default function CartItem({title, description, img, amount, price, id}: CartItemFullData) {
     return (
         <Card withBorder shadow="sm" padding="xs">
             <div className={classes.cartItemInner}>

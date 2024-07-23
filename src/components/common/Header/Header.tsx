@@ -2,7 +2,11 @@ import classes from "./Header.module.css";
 import { IconShoppingCart } from '@tabler/icons-react';
 import {ActionIcon, Title} from "@mantine/core";
 
-export default function Header({isCartOpened, setIsCartOpened}) {
+type HeaderProps = {
+    isCartOpened: boolean,
+    setIsCartOpened: (arg: boolean) => void
+}
+export default function Header({isCartOpened, setIsCartOpened}: HeaderProps) {
     return (
         <header className={classes.header}>
             <Title className={classes.title}>Your store</Title>

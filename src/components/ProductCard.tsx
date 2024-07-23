@@ -1,7 +1,11 @@
-import {addToCart} from "../backend.js";
+import {addToCart, Product} from "../backend.ts";
 import {Card, Text, Image, Badge, Group, useMantineTheme, Button} from "@mantine/core";
 
-export default function ProductCard({title, description, img, amount, price, id, isCartOpened, setIsCartOpened}) {
+type ProductCardProps = (Product & {
+    isCartOpened: boolean,
+    setIsCartOpened: (arg: boolean) => void
+})
+export default function ProductCard({title, description, img, price, id, isCartOpened, setIsCartOpened}: ProductCardProps) {
     const theme = useMantineTheme();
 
     function onAddToCart() {

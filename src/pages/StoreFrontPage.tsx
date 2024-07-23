@@ -1,10 +1,14 @@
 import {useEffect, useState} from "react";
-import {getAllProducts} from "../backend.js";
-import ProductCard from "../components/ProductCard.jsx";
+import {getAllProducts, Product} from "../backend.ts";
+import ProductCard from "../components/ProductCard.js";
 import { Container, SimpleGrid} from "@mantine/core";
 
-export default function StoreFrontPage({setIsCartOpened, isCartOpened}) {
-    const [products, setProducts] = useState();
+type StoreFrontPage = {
+    isCartOpened: boolean,
+    setIsCartOpened: (arg: boolean) => void
+}
+export default function StoreFrontPage({setIsCartOpened, isCartOpened}: StoreFrontPage) {
+    const [products, setProducts] = useState<Product[]>();
 
     useEffect(() => {
         (async () => {

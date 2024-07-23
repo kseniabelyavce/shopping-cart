@@ -1,7 +1,8 @@
 import { useState} from "react";
-import ShoppingCart from "./components/ShoppingCart/ShoppingCart.jsx";
-import StoreFrontPage from "./pages/StoreFrontPage.jsx";
-import Header from "./components/common/Header/Header.jsx";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart.tsx";
+import StoreFrontPage from "./pages/StoreFrontPage.js";
+import Header from "./components/common/Header/Header.js";
+
 
 export default function App() {
     const [isCartOpened, setIsCartOpened] = useState(false);

@@ -1,4 +1,11 @@
-const availableProducts = [
+export type Product = {
+    title: string,
+    description: string,
+    price: number,
+    id: number,
+    img: string
+}
+const availableProducts: Product[] = [
     {
         title: "Chair 1",
         description: "This is the description for chair.",
@@ -57,16 +64,17 @@ const availableProducts = [
     },
 ]
 
-
-export async function getAllProducts() {
+export async function getAllProducts(): Promise<Product[]> {
     return new Promise((resolve) => resolve(availableProducts))
 }
 
-export async function getCartItemsFullData() {
+export type CartItemFullData = (Product & CartItem);
+
+export async function getCartItemsFullData(): Promise<CartItemFullData[]> {
     const cartItems = await getCartItems();
     const cartItemsIds = Object.keys(cartItems);
     const thirtyDaysAgo = new Date(new Date().getTime() - (30 * 24 * 60 * 60 * 1000));
-    const nonExpiredItems = cartItemsIds.filter(itemId => cartItems[itemId].created >= thirtyDaysAgo);
+    const nonExpiredItems = cartItemsIds.filter(itemId => cartItems[Number(itemId)].created >= thirtyDaysAgo);
     const cartItemsProductData = availableProducts.filter(({id}) => {
         return nonExpiredItems.includes(id.toString())
     })
@@ -76,23 +84,29 @@ export async function getCartItemsFullData() {
     return new Promise((resolve) => resolve(cartItemsFullData))
 }
 
-export async function addToCart(productId) {
+export async function addToCart(productId: number) {
     const cart = await getCartItems();
     cart[productId] = cart[productId] || {amount: 0, created: Date.now()};
     cart[productId].amount += 1;
     localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-export async function removeFromCart(productId) {
+export async function removeFromCart(productId: number) {
     const cart = await getCartItems();
     delete cart[productId]
     localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-export async function getCartItems() {
+
+type CartItem = {
+    amount: number,
+    created: Date,
+}
+export async function getCartItems(): Promise<{ [key: number]: CartItem }> {
     return new Promise((resolve) => {
+        // eslint-disable-next-line prefer-const
         let jsonCart = localStorage.getItem('cart');
-        let cart = {};
+        let cart: { [key: number]: CartItem } = {};
         if (jsonCart) {
             cart = JSON.parse(jsonCart);
         }
@@ -100,14 +114,14 @@ export async function getCartItems() {
     })
 }
 
-export async function getNumberOfItemsInTheCart() {
+export async function getNumberOfItemsInTheCart(): Promise<number> {
     const cart = await getCartItems();
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
         resolve(Object.keys(cart).length);
     })
 }
 
-export async function removeOneItemFromCart(productId) {
+export async function removeOneItemFromCart(productId: number) {
     const cart = await getCartItems();
     cart[productId].amount -= 1
     if (cart[productId].amount < 1) {
@@ -116,7 +130,7 @@ export async function removeOneItemFromCart(productId) {
     localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-export async function addOneItemToCart(productId) {
+export async function addOneItemToCart(productId: number) {
     const cart = await getCartItems();
     cart[productId].amount += 1
     localStorage.setItem('cart', JSON.stringify(cart))
@@ -126,7 +140,7 @@ export async function clearCart() {
     localStorage.setItem('cart', JSON.stringify({}))
 }
 
-export async function checkout() {
+export async function checkout(): Promise<string> {
     await clearCart();
     return new Promise((resolve) => {
         resolve('success')

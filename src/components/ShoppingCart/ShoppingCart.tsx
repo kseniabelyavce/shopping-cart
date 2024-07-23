@@ -1,27 +1,32 @@
 import {useEffect, useState} from "react";
 import {
+    CartItemFullData,
     checkout,
     clearCart,
     getCartItemsFullData,
     getNumberOfItemsInTheCart,
-} from "../../backend.js";
-import CartItem from "../CartItem/CartItem.jsx";
-import {useToastNotification} from "../../contexts/ToastContextProvider.jsx";
+} from "../../backend.ts";
+import CartItem from "../CartItem/CartItem.js";
+import {ToastContextType, useToastNotification} from "../../contexts/ToastContextProvider.js";
 import classes from "./ShoppingCart.module.css";
 import {Button, Text, useMantineTheme} from "@mantine/core";
 
-function getTotalPrice(items) {
+function getTotalPrice(items: CartItemFullData[]):string {
     let price = 0;
     items.map(item => {
         price += item.price * item.amount
     })
     return price.toFixed(2);
 }
-export default function ShoppingCart({setIsCartOpened}) {
-    const [cartItemsFullData, setCartItemsFullData] = useState();
-    const [cartItemsTotal, setCartItemsTotal] = useState();
+
+type ShoppingCartProps = {
+    setIsCartOpened: (arg: boolean) => void;
+}
+export default function ShoppingCart({setIsCartOpened}: ShoppingCartProps) {
+    const [cartItemsFullData, setCartItemsFullData] = useState<CartItemFullData[]>();
+    const [cartItemsTotal, setCartItemsTotal] = useState<number>();
     const theme = useMantineTheme();
-    const showToast = useToastNotification();
+    const { showToastMessage } = useToastNotification() as ToastContextType;
 
     function handleAreaClick() {
         setIsCartOpened(false);
@@ -43,9 +48,9 @@ export default function ShoppingCart({setIsCartOpened}) {
         const result = await checkout();
 
         if (result) {
-            showToast('Your purchase was successful!', "success")
+            showToastMessage('Your purchase was successful!', "success")
         } else {
-            showToast('There was an error purchasing the items. Please try again', "error")
+            showToastMessage('There was an error purchasing the items. Please try again', "error")
         }
     }
 
@@ -59,7 +64,7 @@ export default function ShoppingCart({setIsCartOpened}) {
                         {cartItemsFullData?.map((product) => {
                             return (
                                 <div key={product.id} style={{display: "flex", marginBottom: "4px"}}>
-                                    <CartItem {...product} isCart/>
+                                    <CartItem {...product}/>
                                 </div>
                             )
                         })}
